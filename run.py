@@ -18,7 +18,7 @@ def get_sales_data():
     """
     Get sales figures input from the user.
     Run a while loop to collect a valid string of data from the user
-    via the terminal, which must be a string of 6 numbers separated 
+    via the terminal, which must be a string of 6 numbers separated
     by commas. The loop will repeadetly request data until it is valid.
     """
     while True:
@@ -130,9 +130,19 @@ def main():
     sales_coluimns = get_last_5_entries_sales()
     stock_data = calculate_stock_data(sales_coluimns)
     update_worksheet(stock_data, "stock")
+    return stock_data
 
 
 print("Welcome to Love Sandwhiches Data Automation")
-main()
+stock_data = main()
 
 
+def get_stock_values(data):
+    headings = SHEET.worksheet("sales").row_values(1)
+    stock_values = dict(zip(headings, data))
+    return stock_values
+
+
+stock_values = get_stock_values(stock_data)
+print(f"Make the following numbers of sandwhiches for next market:\n\n\
+{stock_values}")
